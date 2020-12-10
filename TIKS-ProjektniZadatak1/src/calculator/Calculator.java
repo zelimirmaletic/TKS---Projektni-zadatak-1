@@ -14,6 +14,13 @@ public class Calculator {
 	private Double currentValue;
 	
 	/**
+	 * Default constructor which sets initial value to 0.0.
+	 */
+	public Calculator() {
+		currentValue = 0.0;
+	}
+	
+	/**
 	 * Setter method for currentValue.
 	 * @param value Value to be set.
 	 * @return void
@@ -61,6 +68,7 @@ public class Calculator {
 					}
 				}catch(DivisionByZeroException exc) {
 					exc.printStackTrace();
+					return;
 				}
 				currentValue /= value;
 				break;
@@ -72,6 +80,7 @@ public class Calculator {
 					throw exc;
 				}catch(NotSupportedOperationException exc) {
 					exc.printStackTrace();
+					return;
 				}
 		}
 	}

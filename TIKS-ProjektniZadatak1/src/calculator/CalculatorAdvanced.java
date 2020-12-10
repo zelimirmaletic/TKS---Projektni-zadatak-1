@@ -1,7 +1,6 @@
 package calculator;
 import exceptions.NotSupportedOperationException;
 import exceptions.NumberNotInAreaException;
-import exceptions.PowerException;
 
 /**
  * This class extends Calculator class and implements advanced 
@@ -16,9 +15,12 @@ public class CalculatorAdvanced extends Calculator{
 	/**
 	 * Method which calculates power and factorial.
 	 * @param action Action to be performed. Allowed values are
-	 * ! or number in range from 1 to 100.
+	 * ! or number in range from 0 to 9.
+	 * @throws NumberNotInAreaException Thrown if we enter invalid action. Something different than '!'
+	 * , or a digit from 0 to 9.
+	 * @throws PowerException Thrown if entered value for action is not in range [0,9].
 	 */
-	public void calculateAdvanced(char action) {
+	public void calculateAdvanced(char action) throws NumberNotInAreaException {
 		//Take integer value
 		Integer intCurrentValue = this.getCurrentValue().intValue();
 		
@@ -26,7 +28,7 @@ public class CalculatorAdvanced extends Calculator{
 			try {
 				if(intCurrentValue > 10 || intCurrentValue < 0)
 				{
-					String message = "Number is out of range!";
+					String message = "Current value is out of range [0,10]!";
 					var exc = new NumberNotInAreaException(message);
 					throw exc;
 				}
@@ -35,26 +37,25 @@ public class CalculatorAdvanced extends Calculator{
 				return;
 			}
 			//Calculate factorial 
-			this.setCurrentValue((double) factorial(intCurrentValue));
+			this.setCurrentValue((double)factorial(intCurrentValue));
 			return;
 		}
-		
-		//Get numeric value of action
-		int actionNumericValue = Character.getNumericValue(action);
-		
-		try {
-			if(actionNumericValue < 1 || actionNumericValue > 100 || this.getCurrentValue() < 1) {
-				String message = "Number not in allowed range!";
-				var exc = new PowerException(message);
+		else if(action <= 0x39 && action>= 0x30) {
+				//Calculate power
+				this.setCurrentValue((double) power(intCurrentValue, Character.getNumericValue(action)));
+				return;
+		}
+		else{
+			try {
+				String message = "Operation is not supported by the calculator!";
+				var exc = new NotSupportedOperationException(message);
 				throw exc;
+			}catch(NotSupportedOperationException exc) {
+				exc.printStackTrace();
+				return;
 			}
-		}catch(PowerException exc) {
-			exc.printStackTrace();
-			return;
 		}
-		//Calculate power
-		this.setCurrentValue((double) power(intCurrentValue, actionNumericValue));	
-	}
+	}			
 	
 	/**
 	 * Method which checks whether a number is Armstrong or perfect.
@@ -131,6 +132,10 @@ public class CalculatorAdvanced extends Calculator{
 	 * @return Returns number raised to exponent.
 	 */
 	static int power(int number, int exponent) {
+		if(number == 0 && exponent == 0)
+			return 1;
+		if (exponent == 0)
+			return 1;
 		int power = 1; 
         for (int i = 1; i <= exponent; i++) 
             power *= number; 
