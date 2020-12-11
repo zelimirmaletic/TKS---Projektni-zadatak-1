@@ -11,7 +11,6 @@ import exceptions.NumberNotInAreaException;
  * @see calculator.Calculator
  */
 public class CalculatorAdvanced extends Calculator{
-	
 	/**
 	 * Method which calculates power and factorial.
 	 * @param action Action to be performed. Allowed values are
@@ -21,7 +20,7 @@ public class CalculatorAdvanced extends Calculator{
 	 * @throws PowerException Thrown if entered value for action is not in range [0,9].
 	 */
 	public void calculateAdvanced(char action) throws NumberNotInAreaException {
-		//Take integer value
+		//Take integer value of currentValue
 		Integer intCurrentValue = this.getCurrentValue().intValue();
 		
 		if(action == '!') {
@@ -29,8 +28,7 @@ public class CalculatorAdvanced extends Calculator{
 				if(intCurrentValue > 10 || intCurrentValue < 0)
 				{
 					String message = "Current value is out of range [0,10]!";
-					var exc = new NumberNotInAreaException(message);
-					throw exc;
+					throw new NumberNotInAreaException(message);
 				}
 			}catch(NumberNotInAreaException exc) {
 				exc.printStackTrace();
@@ -40,7 +38,7 @@ public class CalculatorAdvanced extends Calculator{
 			this.setCurrentValue((double)factorial(intCurrentValue));
 			return;
 		}
-		else if(action <= 0x39 && action>= 0x30) {
+		else if(action>= 0x30 && action <= 0x39) {
 				//Calculate power
 				this.setCurrentValue((double) power(intCurrentValue, Character.getNumericValue(action)));
 				return;
@@ -48,8 +46,7 @@ public class CalculatorAdvanced extends Calculator{
 		else{
 			try {
 				String message = "Operation is not supported by the calculator!";
-				var exc = new NotSupportedOperationException(message);
-				throw exc;
+				 throw new NotSupportedOperationException(message);
 			}catch(NotSupportedOperationException exc) {
 				exc.printStackTrace();
 				return;
@@ -70,46 +67,44 @@ public class CalculatorAdvanced extends Calculator{
 	 * we enter values that are different from allowed ones: {'A', 'P'}.
 	 */
 	public Boolean hasCharacteristic(char value) throws NumberNotInAreaException,NotSupportedOperationException {
-		//Take integer value
+		//Take integer value of currentValue
 		Integer intCurrentValue = this.getCurrentValue().intValue();
 		
 		if(value == 'A') {
 			try {
 				if(intCurrentValue < 1) {
 					String message = "Number is out of range!";
-					var exc = new NumberNotInAreaException(message);
-					throw exc;
+					throw new NumberNotInAreaException(message);
 				}
 			}catch(NumberNotInAreaException exc) {
 				exc.printStackTrace();
 				return false;
 			}
 			//Check if Armstrong
-			return isArmstrong(intCurrentValue);
+			return (Boolean)isArmstrong(intCurrentValue);
 		}
 		else if(value == 'P') {
 			try {
 				if(intCurrentValue < 1) {
 					String message = "Number is out of range!";
-					var exc = new NumberNotInAreaException(message);
-					throw exc;
+					throw new NumberNotInAreaException(message);
 				}
 			}catch(NumberNotInAreaException exc) {
 				exc.printStackTrace();
 				return false;
 			}
 			//Check if Perfect
-			return isPerfect(intCurrentValue);
+			return (Boolean)isPerfect(intCurrentValue);
 		}
 		else {
 			try {
 				String message = "Operation is not supported by the calculator!";
-				var exc = new NotSupportedOperationException(message);
-				throw exc;
+				throw new NotSupportedOperationException(message);
 			}catch(NotSupportedOperationException exc) {
 				exc.printStackTrace();
 			}
 		}
+		//In any other case return false
 		return false;
 	}
 	
@@ -119,6 +114,8 @@ public class CalculatorAdvanced extends Calculator{
 	 * @return Returns calculated factorial value.
 	 */
 	static int factorial(int number) {
+		if (number == 0)
+			return 1;
 		int fact = 1;
 		for(int i=1;i<=number;i++)
 			fact *= i;

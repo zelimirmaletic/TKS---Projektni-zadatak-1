@@ -17,6 +17,7 @@ public class Calculator {
 	 * Default constructor which sets initial value to 0.0.
 	 */
 	public Calculator() {
+		//Set initial value to 0.0
 		currentValue = 0.0;
 	}
 	
@@ -50,34 +51,33 @@ public class Calculator {
 	public void calculate(Double value, char operator) throws DivisionByZeroException, NotSupportedOperationException{
 		switch(operator) {
 			case '+':
-				currentValue += value;
+				this.currentValue += value;
 				break;
 			case '-':
-				currentValue -= value;
+				this.currentValue -= value;
 				break;
 			case '*':
-				currentValue *= value;
+				this.currentValue *= value;
 				break;
 			case '/':
 				//Throw an exception if dividing by zero
 				try {
 					if(value == 0) {
-						String message = "Division by zero!";
-						var exc = new DivisionByZeroException(message);
-						throw exc;
+						String message = "An attpempt to divide by zero was executed!";
+						throw new DivisionByZeroException(message);
 					}
 				}catch(DivisionByZeroException exc) {
 					exc.printStackTrace();
 					return;
 				}
-				currentValue /= value;
+				//Divide currentValue by value
+				this.currentValue /= value;
 				break;
 			default:
 				//Throw an exception
 				try {
 					String message = "Operation is not supported by the calculator!";
-					var exc = new NotSupportedOperationException(message);
-					throw exc;
+					throw new NotSupportedOperationException(message);
 				}catch(NotSupportedOperationException exc) {
 					exc.printStackTrace();
 					return;
