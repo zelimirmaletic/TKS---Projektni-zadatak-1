@@ -67,7 +67,7 @@ public class Calculator {
 						throw new DivisionByZeroException(message);
 					}
 				}catch(DivisionByZeroException exc) {
-					exc.printStackTrace();
+					//exc.printStackTrace();
 					return;
 				}
 				//Divide currentValue by value
@@ -79,7 +79,7 @@ public class Calculator {
 					String message = "Operation is not supported by the calculator!";
 					throw new NotSupportedOperationException(message);
 				}catch(NotSupportedOperationException exc) {
-					exc.printStackTrace();
+					//exc.printStackTrace();
 					return;
 				}
 		}

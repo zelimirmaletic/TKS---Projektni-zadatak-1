@@ -31,7 +31,7 @@ public class CalculatorAdvanced extends Calculator{
 					throw new NumberNotInAreaException(message);
 				}
 			}catch(NumberNotInAreaException exc) {
-				exc.printStackTrace();
+				//exc.printStackTrace();
 				return;
 			}
 			//Calculate factorial 
@@ -48,7 +48,7 @@ public class CalculatorAdvanced extends Calculator{
 				String message = "Operation is not supported by the calculator!";
 				 throw new NotSupportedOperationException(message);
 			}catch(NotSupportedOperationException exc) {
-				exc.printStackTrace();
+				//exc.printStackTrace();
 				return;
 			}
 		}
@@ -77,8 +77,8 @@ public class CalculatorAdvanced extends Calculator{
 					throw new NumberNotInAreaException(message);
 				}
 			}catch(NumberNotInAreaException exc) {
-				exc.printStackTrace();
-				return false;
+				//exc.printStackTrace();
+				return (Boolean)false;
 			}
 			//Check if Armstrong
 			return (Boolean)isArmstrong(intCurrentValue);
@@ -90,8 +90,8 @@ public class CalculatorAdvanced extends Calculator{
 					throw new NumberNotInAreaException(message);
 				}
 			}catch(NumberNotInAreaException exc) {
-				exc.printStackTrace();
-				return false;
+				//exc.printStackTrace();
+				return (Boolean)false;
 			}
 			//Check if Perfect
 			return (Boolean)isPerfect(intCurrentValue);
@@ -101,11 +101,11 @@ public class CalculatorAdvanced extends Calculator{
 				String message = "Operation is not supported by the calculator!";
 				throw new NotSupportedOperationException(message);
 			}catch(NotSupportedOperationException exc) {
-				exc.printStackTrace();
+				//exc.printStackTrace();
 			}
 		}
 		//In any other case return false
-		return false;
+		return (Boolean)false;
 	}
 	
 	/**

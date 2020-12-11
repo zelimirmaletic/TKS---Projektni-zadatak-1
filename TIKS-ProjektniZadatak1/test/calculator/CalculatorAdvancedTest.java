@@ -16,27 +16,21 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import exceptions.DivisionByZeroException;
 import exceptions.NotSupportedOperationException;
+import exceptions.NumberNotInAreaException;
 
 //Hamcrest
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-
-
-
-@DisplayName("Calculator Class Tests")
+@DisplayName("CalculatorAdvanced Class Tests")
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-class CalculatorTest {
+class CalculatorAdvancedTest {
 	
-	//Create a calculator object
-	private Calculator calc = new Calculator();
+	CalculatorAdvanced calc = new CalculatorAdvanced();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		//Initialize to zero before every test
-		//calc.setCurrentValue(0.0);
 	}
 
 	@AfterAll
@@ -49,9 +43,8 @@ class CalculatorTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		//System.out.println(calc.getCurrentValue());
 	}
-
+	
 	@Test
 	@DisplayName("Constructor Test")
 	@EnabledOnOs({OS.LINUX, OS.WINDOWS, OS.MAC})
@@ -74,24 +67,43 @@ class CalculatorTest {
 	}
 	
 	@ParameterizedTest
-	@DisplayName("Method calculate() Test")
-	@MethodSource("methodWithParameters")
-	void testCalculate(Double current, Double value, char operator, Double expectedValue) throws DivisionByZeroException, NotSupportedOperationException {
+	@DisplayName("Method calculateAdvanced() Test")
+	@MethodSource("methodWithParameters1")
+	void testCalculateAdvanced(Double current, char operator, Double expectedValue) throws NumberNotInAreaException, NotSupportedOperationException {
 		calc.setCurrentValue(current);
-		calc.calculate(value, operator);
+		calc.calculateAdvanced(operator);
 		assertThat(calc.getCurrentValue(), is(equalTo(expectedValue)));
 	}
-	private static Stream<Arguments> methodWithParameters() {
+	private static Stream<Arguments> methodWithParameters1() {
 		return Stream.of(
-				Arguments.of(5.0 ,6.0,'+', 11.0),
-				Arguments.of(5.32, 0.32,'-',5.00),
-				Arguments.of(7.0,3.0,'*',21.00),
-				Arguments.of(8.0,4.0,'/',2.00),
-				Arguments.of(0.0,4.0,'/',0.00),
-				Arguments.of(8.0,0.0,'/',8.00),
-				Arguments.of(0.0,0.0,'/',0.00),
-				Arguments.of(7.0,2.00,'С',7.00));
+				Arguments.of(5.2540 ,'!', 120.0),
+				Arguments.of(0.0,'!',1.00),
+				Arguments.of(-5.320, '!',-5.320),
+				Arguments.of(2.0, '2',4.00),
+				Arguments.of(0.0, '0',1.00),
+				Arguments.of(1.0, '9',1.00),
+				Arguments.of(-5.0, '3',-125.00),
+				Arguments.of(-5.0, '0',1.00),
+				Arguments.of(7.0, 'с',7.00),
+				Arguments.of(1.0, '!',1.00));
 		}
-
+	
+	@ParameterizedTest
+	@DisplayName("Method hasCharacteristics() Test")
+	@MethodSource("methodWithParameters2")
+	void testHasCharacteristics(Double current, char operator, Boolean expectedValue) throws NumberNotInAreaException, NotSupportedOperationException {
+		calc.setCurrentValue(current);
+		Boolean result = calc.hasCharacteristic(operator);
+		assertThat(result, is(equalTo(expectedValue)));
+	}
+	private static Stream<Arguments> methodWithParameters2() {
+		return Stream.of(
+				Arguments.of(5.0 ,'S', false),
+				Arguments.of(371.00,'A',true),
+				Arguments.of(-5.0, 'P',false),
+				Arguments.of(0.0, 'A',false),
+				Arguments.of(6.120, 'P',true),
+				Arguments.of(1.0, '!',false));
+		}
 
 }
