@@ -21,7 +21,8 @@ import exceptions.NotSupportedOperationException;
 
 //Hamcrest
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;;
+import static org.junit.Assert.assertThrows;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 
@@ -35,8 +36,6 @@ class CalculatorTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		//Initialize to zero before every test
-		//calc.setCurrentValue(0.0);
 	}
 
 	@AfterAll
@@ -78,7 +77,13 @@ class CalculatorTest {
 	@MethodSource("methodWithParameters")
 	void testCalculate(Double current, Double value, char operator, Double expectedValue) throws DivisionByZeroException, NotSupportedOperationException {
 		calc.setCurrentValue(current);
-		calc.calculate(value, operator);
+		try {
+			calc.calculate(value, operator);
+		} catch (DivisionByZeroException e) {
+			//e.printStackTrace();
+		} catch (NotSupportedOperationException e) {
+			//e.printStackTrace();
+		}
 		assertThat(calc.getCurrentValue(), is(equalTo(expectedValue)));
 	}
 	private static Stream<Arguments> methodWithParameters() {
@@ -92,6 +97,19 @@ class CalculatorTest {
 				Arguments.of(0.0,0.0,'/',0.00),
 				Arguments.of(7.0,2.00,'С',7.00));
 		}
-
-
+	
+	@Test
+	@DisplayName("Calculator Exception Test")
+	void testCalculateException() throws DivisionByZeroException, NotSupportedOperationException{
+		
+		//Test division by zero exception
+		calc.setCurrentValue(8.00);
+        Exception exception1 = assertThrows(DivisionByZeroException.class,() -> calc.calculate(0.0, '/'));
+        assertThat(exception1, is(instanceOf(DivisionByZeroException.class)));
+        
+      //Test not supported operation exception
+      		calc.setCurrentValue(8.00);
+              Exception exception2 = assertThrows(NotSupportedOperationException.class,() -> calc.calculate(2.00, '$'));
+              assertThat(exception2, is(instanceOf(NotSupportedOperationException.class)));
+	}
 }

@@ -60,28 +60,13 @@ public class Calculator {
 				this.currentValue *= value;
 				break;
 			case '/':
-				//Throw an exception if dividing by zero
-				try {
-					if(value == 0) {
-						String message = "An attpempt to divide by zero was executed!";
-						throw new DivisionByZeroException(message);
-					}
-				}catch(DivisionByZeroException exc) {
-					//exc.printStackTrace();
-					return;
-				}
+				if(value == 0)
+					throw new DivisionByZeroException("An attpempt to divide by zero was executed!");
 				//Divide currentValue by value
 				this.currentValue /= value;
 				break;
 			default:
-				//Throw an exception
-				try {
-					String message = "Operation is not supported by the calculator!";
-					throw new NotSupportedOperationException(message);
-				}catch(NotSupportedOperationException exc) {
-					//exc.printStackTrace();
-					return;
-				}
+				throw new NotSupportedOperationException("Operation is not supported by the calculator!");
 		}
 	}
 }
