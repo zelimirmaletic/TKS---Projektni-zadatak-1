@@ -24,7 +24,6 @@ public class Calculator {
 	/**
 	 * Setter method for currentValue.
 	 * @param value Value to be set.
-	 * @return void
 	 */
 	public void setCurrentValue(Double value) {
 		this.currentValue = value;

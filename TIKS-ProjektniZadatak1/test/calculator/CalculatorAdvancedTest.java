@@ -97,12 +97,14 @@ class CalculatorAdvancedTest {
 				
 				Arguments.of(0.0, '0',1.00),
 				Arguments.of(1.0, (char)0x30,1.00),
-				Arguments.of(1.0, (char)0x39,1.00),
+				Arguments.of(1.0, (char)0x31,1.00),
+				Arguments.of(2.0, (char)0x39,512.00),
 				Arguments.of(1.0, (char)0x38,1.00),
+				
 				Arguments.of(1.0, (char)0x29,1.00),
-				Arguments.of(1.0, (char)0x40,1.00),
+				Arguments.of(2.0, (char)0x40,2.00),
 				Arguments.of(1.0, (char)0x35,1.00),
-				Arguments.of(1.0, '9',1.00),
+				Arguments.of(2.0, '9',512.00),
 				Arguments.of(-5.0, '3',-125.00),
 				
 				Arguments.of(-5.0, '0',1.00),
@@ -181,9 +183,10 @@ class CalculatorAdvancedTest {
         //Test NotSupportedOperationException
       	calc.setCurrentValue(8.00);
         Exception exception3 = assertThrows(NotSupportedOperationException.class,() -> calc.hasCharacteristic('W'));
-        assertThat(exception3, is(instanceOf(NotSupportedOperationException.class)));
-        
-		
+        assertThat(exception3, is(instanceOf(NotSupportedOperationException.class)));	
 	}
-
 }
+
+
+
+

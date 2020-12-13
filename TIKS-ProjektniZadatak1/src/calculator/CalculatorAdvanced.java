@@ -31,7 +31,7 @@ public class CalculatorAdvanced extends Calculator{
 			return;
 		}
 		else if(action < 0x30 || action > 0x39)
-			throw new NotSupportedOperationException("Operation is not supported by the calculator!");
+			throw new NotSupportedOperationException("Operation is not supported by the calculator!");			
 		else {
 			//Calculate power
 			this.setCurrentValue((double) power(intCurrentValue, Character.getNumericValue(action)));
@@ -60,11 +60,11 @@ public class CalculatorAdvanced extends Calculator{
 		
 		if(value == 'A') {
 			//Check if Armstrong
-			return (Boolean)isArmstrong(intCurrentValue);
+			return isArmstrong(intCurrentValue);
 		}
 		else if(value == 'P') {
 			//Check if Perfect
-			return (Boolean)isPerfect(intCurrentValue);
+			return isPerfect(intCurrentValue);
 		}
 		else
 			throw new NotSupportedOperationException("Operation is not supported by the calculator!");
